@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import Header from './header';
 import Order from './order';
 import Inventory from './inventory';
+import FishList from './fish_list';
+
+import sampleFishes from '../sample-fishes';
 
 class App extends Component {
   state = {
@@ -20,16 +23,23 @@ class App extends Component {
     this.setState({
       fishes // == fishes: fishes
     })
-  }
+  };
+
+  loadSampleFishes = () => {
+    this.setState({
+      fishes: sampleFishes
+    });
+  };
 
   render() {
     return (
       <div className="catch-of-the-day">
         <div className="menu">
           <Header tagline="Fish are Fresh"/>
+          <FishList fishes={this.state.fishes} />
         </div>
         <Order />
-        <Inventory addFish={this.addFish} state={this.state}/>
+        <Inventory addFish={this.addFish} loadSampleFishes={this.loadSampleFishes} state={this.state}/>
       </div>
     );
   }
