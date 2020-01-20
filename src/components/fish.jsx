@@ -4,7 +4,6 @@ import { formatPrice } from '../helpers';
 
 class Fish extends Component {
   handleClick = (e) => {
-    // console.log(this);
     this.props.addToOrder(this.props.index);
   }
 
