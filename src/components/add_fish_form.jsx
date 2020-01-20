@@ -12,13 +12,13 @@ class AddFishForm extends Component {
     e.preventDefault();
     // console.log(this.nameRef);
     const fish = {
-      nameRef: this.nameRef.current.value,
-      priceRef: this.priceRef.current.value,
-      statusRef: this.statusRef.current.value,
-      descRef: this.descRef.current.value,
-      imageRef: this.imageRef.current.value
+      name: this.nameRef.current.value,
+      price: parseFloat(this.priceRef.current.value),
+      status: this.statusRef.current.value,
+      desc: this.descRef.current.value,
+      image: this.imageRef.current.value
     }
-    console.log(fish);
+    this.props.addFish(fish);
   }
 
   render() {
