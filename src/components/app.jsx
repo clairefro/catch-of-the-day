@@ -15,7 +15,7 @@ class App extends Component {
     // 1. take copy of existing state (no mutation!)
     const fishes = { ...this.state.fishes }  // copy object with object spread
     // 2. Add new fish to fishes
-    fishes[`fish${Date.now}`] = fish; // key has unique time identifier
+    fishes[`fish${Date.now()}`] = fish; // key has unique time identifier
     // 3. set new fishes obj to statusRef
     this.setState({
       fishes // == fishes: fishes
