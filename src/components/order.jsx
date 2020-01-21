@@ -6,7 +6,9 @@ class Order extends Component {
   renderOrder = (key) => {
     const fish = this.props.fishes[key];
     const count = this.props.order[key];
-    const isAvail = fish.status === 'available';
+    // return nothing if no fish loaded
+    if(!fish) return null;
+    const isAvail = fish && fish.status === 'available';
     // handle sold out
     if (!isAvail) {
       console.log('entered if')

@@ -19,6 +19,16 @@ class App extends Component {
   // IMPORTANT
   componentDidMount() {
     const { params } = this.props.match
+    // reinstate local storage if local storage ref exists
+    const localStorageRef = localStorage.getItem(params.storeId);
+    console.log(localStorageRef);
+    console.log(JSON.parse(localStorageRef));
+
+    if (localStorageRef) {
+      this.setState({
+        order: JSON.parse(localStorageRef)
+      })
+    }
     // firebase refs are refs to piece of database
     this.ref = base.syncState(`${params.storeId}/fishes`, {
       context: this,
@@ -26,10 +36,16 @@ class App extends Component {
     })
   }
 
+  componentDidUpdate() {
+    // key: store name, val: order (need to store as string)
+    localStorage.setItem(this.props.match.params.storeId, JSON.stringify(this.state.order));
+  }
+
   componentWillUnmount() {
     // remove firebase bidning ref on unmount (switch store)
     base.removeBinding(this.ref);
   }
+
 
   addFish = (fish) => {
     // to update state:
