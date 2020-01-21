@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 import Header from './header';
 import Order from './order';
 import Inventory from './inventory';
@@ -7,11 +8,28 @@ import FishList from './fish_list';
 
 import sampleFishes from '../sample-fishes';
 
+import base from '../base';
+
 class App extends Component {
   state = {
     fishes: {},
     order: {}
   };
+
+  // IMPORTANT
+  componentDidMount() {
+    const { params } = this.props.match
+    // firebase refs are refs to piece of database
+    this.ref = base.syncState(`${params.storeId}/fishes`, {
+      context: this,
+      state: 'fishes'
+    })
+  }
+
+  componentWillUnmount() {
+    // remove firebase bidning ref on unmount (switch store)
+    base.removeBinding(this.ref);
+  }
 
   addFish = (fish) => {
     // to update state:
@@ -32,7 +50,6 @@ class App extends Component {
   };
 
   addToOrder = (key) => {
-    console.log('enetered add');
     // 1. take copy of existing state (no mutation!)
     const order = { ...this.state.order };  // copy object with object spread
     // 2. Add order or update order number

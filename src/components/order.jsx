@@ -6,11 +6,16 @@ class Order extends Component {
   renderOrder = (key) => {
     const fish = this.props.fishes[key];
     const count = this.props.order[key];
-
-    return <li>
+    const isAvail = fish.status === 'available';
+    // handle sold out
+    if (!isAvail) {
+      console.log('entered if')
+      return <li key={key}>Sorry {fish ? fish.name : 'fish'} is no longer avail</li>
+    }
+    return (<li key={key}>
       {count} lbs {fish.name}
       {formatPrice(count *fish.price)}
-    </li>
+    </li>);
   }
   render() {
     const orderIds = Object.keys(this.props.order);
@@ -25,17 +30,15 @@ class Order extends Component {
       return prevTotal
     }, 0); // <-- starting value
 
-
     return (
      <div className="order-wrap">
      <h2>Order</h2>
-     <ul>{orderIds.map(this.renderOrder)}
+     <ul className="order">{orderIds.map(this.renderOrder)}
      </ul>
      <div className={total}>
        <strong>{formatPrice(total)}</strong>
      </div>
      </div>
-
     );
   }
 }
